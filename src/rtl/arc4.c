@@ -54,7 +54,7 @@
       ! defined( HB_OS_ANDROID ) && \
       ! defined( __WATCOMC__ ) && \
       ! defined( __EMSCRIPTEN__ ) )
-#  define HAVE_SYS_SYSCTL_H
+//#  define HAVE_SYS_SYSCTL_H
 #  define HAVE_DECL_CTL_KERN
 #  define HAVE_DECL_KERN_RANDOM
 #  if defined( HB_OS_LINUX )
@@ -73,7 +73,7 @@
 #  include <sys/time.h>
 #  include <sys/types.h>
 #  ifdef HAVE_SYS_SYSCTL_H
-#     include <sys/sysctl.h>
+//#     include <sys/sysctl.h>
 #     if ! defined( HB_OS_LINUX ) && defined( KERN_ARND )
 #        define HAVE_DECL_KERN_ARND
 #     endif
@@ -229,7 +229,7 @@ static int arc4_seed_sysctl_linux( void )
    {
       n = sizeof( buf ) - len;
 
-      if( sysctl( mib, 3, &buf[ len ], &n, NULL, 0 ) != 0 )
+      if( syscall( mib, 3, &buf[ len ], &n, NULL, 0 ) != 0 )
          return -1;
    }
 
@@ -266,7 +266,7 @@ static int arc4_seed_sysctl_bsd( void )
    memset( buf, 0, sizeof( buf ) );
 
    len = sizeof( buf );
-   if( sysctl( mib, 2, buf, &len, NULL, 0 ) == -1 )
+   if( syscall( mib, 2, buf, &len, NULL, 0 ) == -1 )
    {
       for( len = 0; len < sizeof( buf ); len += sizeof( unsigned ) )
       {
@@ -275,7 +275,7 @@ static int arc4_seed_sysctl_bsd( void )
          if( n + len > sizeof( buf ) )
             n = len - sizeof( buf );
 
-         if( sysctl( mib, 2, &buf[ len ], &n, NULL, 0 ) == -1 )
+         if( syscall( mib, 2, &buf[ len ], &n, NULL, 0 ) == -1 )
             return -1;
       }
    }
