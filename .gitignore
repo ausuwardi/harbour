@@ -35,3 +35,14 @@ obj
 
 # exceptions
 !/*.exe
+
+# debian stuff
+build-stamp
+debian/.debhelper
+debian/files
+debian/harbour-dbg.debhelper.log
+debian/harbour-dbg.substvars
+debian/harbour-dbg
+debian/harbour.debhelper.log
+debian/harbour.substvars
+debian/harbour
